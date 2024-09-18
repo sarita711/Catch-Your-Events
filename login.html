@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+    <style>
+        body {
+            background-color:#f7f7f7 ; 
+            color: white; 
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .form-container {
+            background-color: #7da2a9; 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: #ffffff; 
+            color: #004080; 
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #cce0ff; 
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="userType">User Type:</label>
+            <select id="userType" name="userType" required>
+                <option value="normal">Normal User</option>
+                <option value="company">Company User</option>
+                <option value="admin">Admin</option>
+            </select>
+            
+            <div id="companyFields" style="display: none;">
+                <label for="companyId">Company ID:</label>
+                <input type="text" id="companyId" name="companyId">
+                
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName">
+            </div>
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('userType').addEventListener('change', function() {
+            var companyFields = document.getElementById('companyFields');
+            if (this.value === 'company') {
+                companyFields.style.display = 'block';
+            } else {
+                companyFields.style.display = 'none';
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+           
+            var userType = document.getElementById('userType').value;
+            if (userType === 'normal') {
+                window.location.href = 'HomeNormal.html'; 
+            } else if (userType === 'company') {
+                window.location.href = 'Home.html';
+            } else {
+                window.location.href = 'Home.html'; 
+            }
+        });
+    </script>
+</body>
+</html>

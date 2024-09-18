@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch Your Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #7da2a9;
+            border-bottom: 1px solid #ddd;
+            color: white;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .header .search-bar input {
+            width: 100%;
+            padding: 5px;
+        }
+
+        .header .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .header .nav-links .profile-icon {
+            margin-left: 20px;
+        }
+
+        .main-content {
+            display: flex;
+            padding:0 20px;
+            margin: 20 20px;
+        }
+
+        .column {
+            flex: 1;
+            padding: 10px;
+            margin: 0 10px;
+        }
+
+        .column+.column {
+            border-left: 1px solid #ddd;
+        }
+
+        .footer {
+            padding: 10px 20px;
+            background-color: #7da2a9;
+            border-top: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .event-post {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .event-post .post-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .event-post .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .event-post .post-header .post-info {
+            flex-grow: 1;
+        }
+
+        .event-post .post-header .wishlist {
+            cursor: pointer;
+        }
+
+        .filters {
+            margin-bottom: 20px;
+        }
+
+        .filters select {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .create-event-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #7da2a9;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .event-form {
+            display: none;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #cdd7da;
+        }
+
+        .event-form input,
+        .event-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .event-form button {
+            padding: 10px 20px;
+            background-color: #7da2a9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Catch Your Events</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="toggleCart()">Cart</a>
+            <a href="#">Contact Us</a>
+            <a href="#" class="profile-icon">Profile</a>
+        </div>
+    </header>
+    <div class="main-content">
+      
+        <div class="column">
+            <h2>Create Event</h2>
+            <div class="create-event-btn" onclick="toggleEventForm()">Create Event</div>
+            <div class="event-form" id="eventForm">
+                <h3>Post an Event</h3>
+                <input type="text" id="eventTitle" placeholder="Event Title">
+                <textarea id="eventDescription" placeholder="Event Description"></textarea>
+                <input type="file" id="eventImage" accept="image/*" placeholder="Upload Image">
+                <input type="file" id="eventVideo" accept="video/*" placeholder="Upload Video">
+                <button onclick="postEvent()">Post Event</button>
+            </div>
+            <h2>Event Feed</h2>
+            <div class="filters">
+                <select>
+                    <option value="date">Sort by Date</option>
+                    <option value="price">Sort by Price</option>
+                </select>
+            </div>
+            <div id="eventFeed" style="height: 300px; overflow-y: scroll;">
+                <!-- Example events -->
+                <div class="event-post">
+                    <div class="post-header">
+                        <img src="profile1.jpg" alt="Profile Picture">
+                        <div class="post-info">
+                            <strong>John Doe</strong><br>
+                            <span>Posted an event</span>
+                        </div>
+                        <div class="wishlist" onclick="addToCart(this)">❤️</div>
+                    </div>
+                    <p>Event 1 details...</p>
+                </div>
+                <div class="event-post">
+                    <div class="post-header">
+                        <img src="profile2.jpg" alt="Profile Picture">
+                        <div class="post-info">
+                            <strong>Jane Smith</strong><br>
+                            <span>Posted an event</span>
+                        </div>
+                        <div class="wishlist" onclick="addToCart(this)">❤️</div>
+                    </div>
+                    <p>Event 2 details...</p>
+                </div>
+             
+            </div>
+        </div>
+        <div class="column suggested-events">
+            <h2>Suggested Events</h2>
+            <div class="event-post">
+                <div class="post-header">
+                    <img src="profile1.jpg" alt="Profile Picture">
+                    <div class="post-info">
+                        <strong>John Doe</strong><br>
+                        <span>Posted an event</span>
+                    </div>
+                    <div class="wishlist" onclick="addToCart(this)">❤️</div>
+                </div>
+                <p>Event 1 details...</p>
+            </div>
+           
+        </div>
+    </div>
+    <footer class="footer">
+        <p>© 2024 Catch Your Events. All rights reserved.</p>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="toggleCart()">×</span>
+            <h2>Cart Items</h2>
+            <div id="cartItems"></div>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px; 
+        }
+
+        .column {
+            flex: 1;
+            margin: 0 10px; 
+        }
+
+        .suggested-events {
+            flex: 0.3; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px; 
+            background-color: #fff; 
+        }
+    </style>
+
+    <script>
+        function toggleEventForm() {
+            var form = document.getElementById('eventForm');
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+
+        function postEvent() {
+            var title = document.getElementById('eventTitle').value;
+            var description = document.getElementById('eventDescription').value;
+            var image = document.getElementById('eventImage').files[0];
+            var video = document.getElementById('eventVideo').files[0];
+
+            if (title && description) {
+                var eventFeed = document.getElementById('eventFeed');
+                var newEvent = document.createElement('div');
+                newEvent.className = 'event-post';
+
+                var postHeader = document.createElement('div');
+                postHeader.className = 'post-header';
+
+                var profileImg = document.createElement('img');
+                profileImg.src = 'profile-placeholder.jpg';
+                profileImg.alt = 'Profile Picture';
+
+                var postInfo = document.createElement('div');
+                postInfo.className = 'post-info';
+                postInfo.innerHTML = '<strong>Your Name</strong><br><span>Posted an event</span>';
+
+                var wishlist = document.createElement('div');
+                wishlist.className = 'wishlist';
+                wishlist.innerHTML = '❤️';
+                wishlist.onclick = function() { addToCart(this); };
+
+                postHeader.appendChild(profileImg);
+                postHeader.appendChild(postInfo);
+                postHeader.appendChild(wishlist);
+
+                newEvent.appendChild(postHeader);
+
+                var eventDetails = document.createElement('p');
+                eventDetails.textContent = description;
+
+                newEvent.appendChild(eventDetails);
+
+                if (image) {
+                    var eventImage = document.createElement('img');
+                    eventImage.src = URL.createObjectURL(image);
+                    eventImage.style.width = '100%';
+                    newEvent.appendChild(eventImage);
+                }
+
+                if (video) {
+                    var eventVideo = document.createElement('video');
+                    eventVideo.src = URL.createObjectURL(video);
+                    eventVideo.controls = true;
+                    eventVideo.style.width = '100%';
+                    newEvent.appendChild(eventVideo);
+                }
+
+                eventFeed.insertBefore(newEvent, eventFeed.firstChild);
+
+                // Clear the form
+                document.getElementById('eventTitle').value = '';
+                document.getElementById('eventDescription').value = '';
+                document.getElementById('eventImage').value = '';
+                document.getElementById('eventVideo').value = '';
+
+                toggleEventForm();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        }
+
+        function addToCart(element) {
+            var eventPost = element.closest('.event-post');
+            var eventDetails = eventPost.querySelector('p').textContent;
+            var cartItems = document.getElementById('cartItems');
+
+            var cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.textContent = eventDetails;
+
+            cartItems.appendChild(cartItem);
+        }
+
+        function toggleCart() {
+            var cartModal = document.getElementById('cartModal');
+            if (cartModal.style.display === 'none' || cartModal.style.display === '') {
+                cartModal.style.display = 'block';
+            } else {
+                cartModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
